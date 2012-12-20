@@ -10,5 +10,7 @@ The simplest use of it is the following:
 include 'Gatracking.php';
 
 $ga = new Gatracking('UA-XXXXX-Y');
+
 echo $ga->getTrackingCode();
+
 ?>
