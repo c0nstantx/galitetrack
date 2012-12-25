@@ -8,9 +8,9 @@ The simplest use of it is the following:
 
 <?php
 
-include 'Gatracking.php';
+include 'Galitetrack.php';
 
-$ga = new Gatracking('UA-XXXXX-Y');
+$ga = new Galitetrack('UA-XXXXX-Y');
 
 echo $ga->getTrackingCode();
 

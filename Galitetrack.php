@@ -27,6 +27,12 @@ class Galitetrack {
      * @var array 
      */
     public $trackElements;
+    
+    /**
+     *
+     * @var array
+     */
+    public $exludeIPs;
 
     /**
      *
@@ -47,13 +53,17 @@ class Galitetrack {
     
     /**
      * Returns the Google Analytics Tracking Code that will be included in the page header.
+     * except if the server IP is in the $this->excludeIPs array.
+     * @param boolean $withScriptTags If true returns <script></script> tags. If false returns only the content of tracking code.
      * @return string The Google Analytics Tracking Code.
      */
     public function getTrackingCode() {
+        if (is_array($this->exludeIPs) && in_array($_SERVER['SERVER_ADDR'], $this->exludeIPs))
+                return;
         $this->code .= "<script type=\"text/javascript\">\n\tvar _gaq = _gaq || [];\n\t_gaq.push(['_setAccount', '$this->id']);\n\t_gaq.push(['_trackPageview']);";
-        $this->code .= $this->_getPushParams($this->pushParams);
+        $this->code .= is_array($this->pushParams) ? $this->_getPushParams($this->pushParams) : '';
         $this->code .= "\n\n\t(function() {\n\t\tvar ga = document.createElement('script');\n\t\tga.type = 'text/javascript';\n\t\tga.async = true;\n\t\tga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n\t\tvar s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n\t})();";
-        $this->code .= $this->_getTrackElements($this->trackElements);
+        $this->code .= is_array($this->trackElements) ? $this->_getTrackElements($this->trackElements) : '';
         $this->code .= "\n</script>";
         return $this->code;
     }
@@ -160,7 +170,7 @@ class Galitetrack {
      * @param array $pushParams The Array of Items
      * @return string The Google Analytics tracking snippet for Push Elements.
      */
-    private function _getPushParams(array $pushParams) {
+    private function _getPushParams(array $pushParams = array()) {
         $pushCode = '';
         if (is_array($pushParams)) {
             foreach ($pushParams as $key=>$value)
