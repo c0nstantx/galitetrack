@@ -3,7 +3,7 @@
  * Description of Galitetrack (Google Analytics Lite Tracking Class)
  * 
  * @author K.Christofilos <kostasxx@yahoo.com>
- * @link http://github.com/kostasxx/php-ga-trackcking
+ * @link http://github.com/c0nstantx/php-ga-trackcking
  * @copyright Copyright &copy; 2013 K.Christofilos
  * @license http://www.gnu.org/licenses/gpl.html
  *
